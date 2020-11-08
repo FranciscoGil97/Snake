@@ -65,6 +65,7 @@ public class GameScreen extends ScreenAdapter {
     private ShapeRenderer shapeRenderer;
     private boolean hasHit = false;
 
+    private String prueba;
     private enum STATE {
         PLAYING, GAME_OVER
     }
