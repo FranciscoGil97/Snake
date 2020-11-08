@@ -26,7 +26,6 @@ public class GameScreen extends ScreenAdapter {
         public void updateBodyPosition(int x, int y) {
             this.x = x;
             this.y = y;
-
         }
 
         public void draw(Batch batch) {
@@ -35,7 +34,6 @@ public class GameScreen extends ScreenAdapter {
         }
 
     }
-
 
     private SpriteBatch batch;
     private Texture img;
@@ -65,11 +63,7 @@ public class GameScreen extends ScreenAdapter {
     private ShapeRenderer shapeRenderer;
     private boolean hasHit = false;
 
-    private String prueba;
-    private String prueba2;
-    private enum STATE {
-        PLAYING, GAME_OVER
-    }
+    private enum STATE {PLAYING, GAME_OVER}
 
     private STATE state = STATE.PLAYING;
     private BitmapFont bitmapFont;
@@ -88,7 +82,6 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-
         switch (state) {
             case PLAYING: {
                 queryInput();
@@ -102,7 +95,6 @@ public class GameScreen extends ScreenAdapter {
             break;
         }
 
-
         clearScreen();
 
         Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
@@ -111,22 +103,20 @@ public class GameScreen extends ScreenAdapter {
         draw();
 
         batch.begin();
-        if (appleAvailable) {
+        if (appleAvailable)
             batch.draw(apple, appleX, appleY);
-        }
+
         batch.draw(snakeHead, snakeX, snakeY);
 
         batch.end();
-
     }
 
     private void drawGrid() {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        for (int x = 0; x < Gdx.graphics.getWidth(); x += GRID_CELL) {
-            for (int y = 0; y < Gdx.graphics.getHeight(); y += GRID_CELL) {
+        for (int x = 0; x < Gdx.graphics.getWidth(); x += GRID_CELL)
+            for (int y = 0; y < Gdx.graphics.getHeight(); y += GRID_CELL)
                 shapeRenderer.rect(x, y, GRID_CELL, GRID_CELL);
-            }
-        }
+
         shapeRenderer.end();
     }
 
@@ -154,18 +144,14 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void checkForOutOfBounds() {
-        if (snakeX >= Gdx.graphics.getWidth()) {
+        if (snakeX >= Gdx.graphics.getWidth())
             snakeX = 0;
-        }
-        if (snakeX < 0) {
+        if (snakeX < 0)
             snakeX = Gdx.graphics.getWidth() - SNAKE_MOVEMENT;
-        }
-        if (snakeY >= Gdx.graphics.getHeight()) {
+        if (snakeY >= Gdx.graphics.getHeight())
             snakeY = 0;
-        }
-        if (snakeY < 0) {
+        if (snakeY < 0)
             snakeY = Gdx.graphics.getHeight() - SNAKE_MOVEMENT;
-        }
     }
 
     private void queryInput() {
@@ -194,15 +180,14 @@ public class GameScreen extends ScreenAdapter {
     private void draw() {
         batch.begin();
         batch.draw(snakeHead, snakeX, snakeY);
-        for (BodyPart bodyPart : bodyParts) {
+        for (BodyPart bodyPart : bodyParts)
             bodyPart.draw(batch);
-        }
-        if (appleAvailable) {
+
+        if (appleAvailable)
             batch.draw(apple, appleX, appleY);
-        }
 
         String text = "This Snake Game is AWESOME!";
-        layout.setText(bitmapFont,text);
+        layout.setText(bitmapFont, text);
         bitmapFont.draw(batch, text, 0, layout.height);
         batch.end();
     }
@@ -217,7 +202,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void checkAndPlaceApple() {
-        if (!appleAvailable) {
+        if (!appleAvailable)
             do {
                 appleX = MathUtils.random(Gdx.graphics.getWidth()
                         / SNAKE_MOVEMENT - 1) * SNAKE_MOVEMENT;
@@ -225,9 +210,7 @@ public class GameScreen extends ScreenAdapter {
                         / SNAKE_MOVEMENT - 1) * SNAKE_MOVEMENT;
                 appleAvailable = true;
             } while (appleX == snakeX && appleY == snakeY);
-        }
     }
-
 
     private void updateBodyPartsPosition() {
         if (bodyParts.size > 0) {
@@ -237,9 +220,7 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-
-    private void updateIfNotOppositeDirection(int newSnakeDirection, int
-            oppositeDirection) {
+    private void updateIfNotOppositeDirection(int newSnakeDirection, int oppositeDirection) {
         if (snakeDirection != oppositeDirection || bodyParts.size == 0)
             snakeDirection = newSnakeDirection;
     }
@@ -269,14 +250,12 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void checkSnakeBodyCollision() {
-        for (BodyPart bodyPart : bodyParts) {
+        for (BodyPart bodyPart : bodyParts)
             if (bodyPart.x == snakeX && bodyPart.y == snakeY) state =
                     STATE.GAME_OVER;
-        }
     }
 
     private void updateSnake(float delta) {
-
         if (!hasHit) {
             timer -= delta;
             if (timer <= 0) {
@@ -287,8 +266,6 @@ public class GameScreen extends ScreenAdapter {
                 checkSnakeBodyCollision();
                 directionSet = false;
             }
-
         }
     }
-
 }
